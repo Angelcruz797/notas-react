@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme {
+  --color-primary-100: #ffffff;
+  --color-primary-200: #ffffff;
+  --color-primary-300: #ffffff;
+  --color-primary-400: #ffffff;
+  --color-primary-500: #ffffff;
+  --color-primary-600: #cccccc;
+  --color-primary-700: #999999;
+  --color-primary-800: #666666;
+  --color-primary-900: #333333;
+
+  --color-secondary-100: #f9f9f9;
+  --color-secondary-200: #f3f3f3;
+  --color-secondary-300: #ededed;
+  --color-secondary-400: #e7e7e7;
+  --color-secondary-500: #e1e1e1;
+  --color-secondary-600: #b4b4b4;
+  --color-secondary-700: #878787;
+  --color-secondary-800: #5a5a5a;
+  --color-secondary-900: #2d2d2d;
+
+  --color-text-color: #000000; 
+
+}
+@utility grid-cols-auto{
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+[data-theme="dark"] {
+  --color-primary-100: #d6d6d6;
+  --color-primary-200: #adadad;
+  --color-primary-300: #858585;
+  --color-primary-400: #5c5c5c;
+  --color-primary-500: #333333;
+  --color-primary-600: #292929;
+  --color-primary-700: #1f1f1f;
+  --color-primary-800: #141414;
+  --color-primary-900: #0a0a0a;
+
+  --color-secondary-100: #e0e1e4;
+  --color-secondary-200: #c1c3c8;
+  --color-secondary-300: #a1a6ad;
+  --color-secondary-400: #828891;
+  --color-secondary-500: #636a76;
+  --color-secondary-600: #4f555e;
+  --color-secondary-700: #3b4047;
+  --color-secondary-800: #282a2f;
+  --color-secondary-900: #141518;
+
+  --color-text-color: #FFFFFF;
+}
