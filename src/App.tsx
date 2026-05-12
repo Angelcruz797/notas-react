@@ -4,6 +4,7 @@ import Draw from './pages/draw/Draw'
 import Home from './pages/home/Home'
 import Landing from './pages/home/components/Landing'
 import Error404 from './pages/error/Error404'
+import { ToastContainer, Slide } from 'react-toastify'
 
 function App() {
       const { colors } = useColor();
@@ -18,6 +19,19 @@ function App() {
             <Route path='/*' element={<Error404 />} />
           </Route>
         </Routes>
+        <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        // limit={4}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        transition={Slide}
+        />
       </div>
     </>
   )

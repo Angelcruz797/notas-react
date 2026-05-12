@@ -1,12 +1,15 @@
 import { Dialog, DialogTitle, IconButton, List, ListItem, ListItemAvatar, ListItemButton, ListItemText } from "@mui/material";
-import { forwardRef, type ReactElement, type Ref } from "react";
+import { forwardRef, useState, type ReactElement, type Ref } from "react";
 import { useColor } from "../../../useContext/colorMode/ColorContext";
 import type { TransitionProps } from "@mui/material/transitions";
 import Slide from '@mui/material/Slide';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import DescriptionIcon from '@mui/icons-material/Description';
 import CloseIcon from '@mui/icons-material/Close';
-import { NavLink, redirect } from "react-router";
+import { useNavigate } from "react-router";
+import useFileMutations from "../../../hook/useFileMutations";
+import { AlertError } from "../../../helpers/AlertError";
+import AlertSuccess from "../../../helpers/AlertSuccess";
 
 type AddFileProps = {
     openDialog: boolean;
@@ -23,7 +26,37 @@ const Transition = forwardRef(function Transition(
 });
 
 export default function AddFileDialog({openDialog: open, handleCloseDialog}: AddFileProps) {
-    const {colors} = useColor();
+  const {colors} = useColor();
+  const [fileName, setFileName] = useState<string>("");
+  const [isValidation, setIsValidation] = useState<boolean>(false);
+  const { createFile } = useFileMutations();
+  const navigate=useNavigate();
+
+
+  const handleFileNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFileName(event.target.value);
+    if(isValidation) {
+      setIsValidation(false);
+    }
+  };
+
+  const handleCreateFile =async (path:string) => {
+    if(fileName.trim().length<=1) {
+      setFileName("");
+      setIsValidation(true);
+      return;
+    }
+    try {
+        setFileName("");
+        const newFile = await createFile({fileType:path, fileName:fileName.trim()});
+        navigate(`/${path.toLowerCase()}/${newFile.id}`);
+        AlertSuccess("File created successfully!",colors.mode);
+    } catch (error) {
+      console.error("Error creating file:", error);
+      handleCloseDialog();
+      AlertError("Error creating file. Please try again.",colors.mode);
+    }
+  }
   return (
     <>
         <Dialog
@@ -40,7 +73,7 @@ export default function AddFileDialog({openDialog: open, handleCloseDialog}: Add
             }
         }}
         >
-            <DialogTitle className="mr-10!" 
+            <DialogTitle className=" mr-10!" 
             sx={{color:colors.letters}}
             >Whitch type of File do you want to create?</DialogTitle>
             <IconButton
@@ -51,11 +84,20 @@ export default function AddFileDialog({openDialog: open, handleCloseDialog}: Add
             >
             <CloseIcon />
             </IconButton>
-            <List className="pt-0">
+            <List className="px-7!">
+                <div className="flex items-center text-sm bg-primary-600 h-12 border pl-2 rounded border-gray-500/30 w-full max-w-md
+                mb-2">
+                  <input className="px-2 w-full h-full outline-none text-text-color bg-transparent"
+                  name="file-name" 
+                  type="text"
+                  value={fileName}
+                  placeholder="Enter file name"
+                  onChange={handleFileNameChange} />
+                </div>
+                {isValidation && <span className="text-red-500 dark:text-red-400 text-xs my-3">File name must be at least 2 characters long</span>}
+
                 <ListItem disablePadding>
-                    <ListItemButton onClick={() =>
-                      redirect('/draw')
-                    }>
+                    <ListItemButton>
                     <ListItemAvatar>
                         <DescriptionIcon sx={{color:colors.letters}} />
                     </ListItemAvatar>
@@ -64,18 +106,16 @@ export default function AddFileDialog({openDialog: open, handleCloseDialog}: Add
                     primary='Document' />
                     </ListItemButton>
                 </ListItem>
-                <NavLink to={'/draw/1'}>
                   <ListItem disablePadding>
-                      <ListItemButton>
-                      <ListItemAvatar>
-                          <ColorLensIcon sx={{color:colors.letters}} />
-                      </ListItemAvatar>
-                      <ListItemText
-                      sx={{color:colors.letters}}
-                      primary='Draw' />
-                      </ListItemButton>
+                    <ListItemButton onClick={()=>handleCreateFile('Draw')}>
+                    <ListItemAvatar>
+                        <ColorLensIcon sx={{color:colors.letters}} />
+                    </ListItemAvatar>
+                    <ListItemText
+                    sx={{color:colors.letters}}
+                    primary='Draw' />
+                    </ListItemButton>
                   </ListItem>
-                </NavLink>
             </List>
       </Dialog>
     </>
