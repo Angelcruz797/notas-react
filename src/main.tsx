@@ -7,7 +7,7 @@ import { ColorProvider } from './useContext/colorMode/ColorProvider.tsx';
 import { UserProvider } from './useContext/user/userProvider.tsx';
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+  // <StrictMode>
     <BrowserRouter>
     <UserProvider>
         <ColorProvider>
@@ -15,5 +15,6 @@ createRoot(document.getElementById('root')!).render(
         </ColorProvider>
       </UserProvider>
     </BrowserRouter>
-  </StrictMode>,
+  // </StrictMode>
+  ,
 )

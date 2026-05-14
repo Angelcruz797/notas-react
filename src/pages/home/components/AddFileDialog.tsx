@@ -1,11 +1,14 @@
-import { Dialog, DialogTitle, IconButton, List, ListItem, ListItemButton, ListItemText, Slide, type TransitionProps } from "@mui/material";
+import { Dialog, DialogTitle, IconButton, List, ListItem, ListItemButton, ListItemText, Slide, type Transitions } from "@mui/material";
 import { forwardRef, useState, type ReactElement, type Ref } from "react";
-import type DescriptionIcon from '@mui/icons-material/Description';
+import DescriptionIcon from '@mui/icons-material/Description';
+import PaletteIcon from '@mui/icons-material/Palette';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from "react-router";
 import useFileMutations from "../../../hook/useFileMutations";
 import { AlertError } from "../../../helpers/AlertError";
 import AlertSuccess from "../../../helpers/AlertSuccess";
+import { useColor } from "../../../useContext/colorMode/ColorContext";
 
 type AddFileProps = {
     openDialog: boolean;
@@ -13,7 +16,7 @@ type AddFileProps = {
 }
 
 const Transition = forwardRef(function Transition(
-  props: TransitionProps & {
+  props: Transitions & {
     children: ReactElement<any, any>;
   },
   ref: Ref<unknown>,
@@ -26,6 +29,7 @@ export default function AddFileDialog({openDialog: open, handleCloseDialog}: Add
   const [isValidation, setIsValidation] = useState<boolean>(false);
   const { createFile } = useFileMutations();
   const navigate = useNavigate();
+  const {colors} = useColor();
 
   const handleFileNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFileName(event.target.value);
@@ -46,11 +50,11 @@ export default function AddFileDialog({openDialog: open, handleCloseDialog}: Add
         setIsValidation(false);
         handleCloseDialog();
         navigate(`/${path.toLowerCase()}/${newFile.id}`);
-        AlertSuccess("File created successfully!", "light");
+        AlertSuccess("File created successfully!", colors.mode);
     } catch (error) {
       console.error("Error creating file:", error);
       handleCloseDialog();
-      AlertError("Error creating file. Please try again.", "light");
+      AlertError("Error creating file. Please try again.", colors.mode);
     }
   };
 
@@ -62,23 +66,23 @@ export default function AddFileDialog({openDialog: open, handleCloseDialog}: Add
       onClose={handleCloseDialog}
       maxWidth="sm"
       fullWidth
-      PaperProps={{
-        className: "bg-white dark:bg-slate-900"
+      sx={{
+        className: "bg-white! dark:bg-slate-900!"
       }}
     >
-      <div className="relative p-6">
+      <div className="relative p-6 pt-2 bg-white! dark:bg-slate-900!">
         {/* Close Button */}
         <IconButton
           aria-label="close"
           onClick={handleCloseDialog}
-          className="absolute right-2 top-2"
+          className="absolute! right-3 top-3"
           size="small"
         >
           <CloseIcon />
         </IconButton>
 
         {/* Title */}
-        <DialogTitle className="p-0 mb-6 text-slate-900 dark:text-white text-2xl font-bold">
+        <DialogTitle className="p-0 text-slate-900 dark:text-white text-2xl font-bold">
           Create New Document
         </DialogTitle>
 
@@ -114,13 +118,13 @@ export default function AddFileDialog({openDialog: open, handleCloseDialog}: Add
           >
             <div className="flex items-center gap-3 w-full">
               <div className="w-10 h-10 rounded bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center text-blue-600">
-                <span className="material-symbols-outlined">description</span>
+                <span className="material-symbols-outlined"><DescriptionIcon /></span>
               </div>
               <div className="flex-1 text-left">
                 <p className="text-sm font-semibold text-slate-900 dark:text-white">Text Document</p>
                 <p className="text-xs text-slate-500 dark:text-slate-400">Create a new document</p>
               </div>
-              <span className="material-symbols-outlined text-slate-400">arrow_forward</span>
+              <span className="material-symbols-outlined text-slate-400"><ArrowForwardIcon /></span>
             </div>
           </ListItemButton>
 
@@ -131,13 +135,13 @@ export default function AddFileDialog({openDialog: open, handleCloseDialog}: Add
           >
             <div className="flex items-center gap-3 w-full">
               <div className="w-10 h-10 rounded bg-green-50 dark:bg-green-900/30 flex items-center justify-center text-green-600">
-                <span className="material-symbols-outlined">palette</span>
+                <span className="material-symbols-outlined"><PaletteIcon /></span>
               </div>
               <div className="flex-1 text-left">
                 <p className="text-sm font-semibold text-slate-900 dark:text-white">Drawing</p>
                 <p className="text-xs text-slate-500 dark:text-slate-400">Create a new drawing</p>
               </div>
-              <span className="material-symbols-outlined text-slate-400">arrow_forward</span>
+              <span className="material-symbols-outlined text-slate-400"><ArrowForwardIcon /></span>
             </div>
           </ListItemButton>
         </div>

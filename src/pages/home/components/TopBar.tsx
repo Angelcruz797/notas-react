@@ -58,7 +58,7 @@ export default function TopBar({ onSearch, onAddFile, username = "User" }: TopBa
       {/* Create Button */}
       <button
         onClick={onAddFile}
-        className="flex items-center gap-2 px-4 h-9 bg-white hover:bg-slate-100 text-text-color dark:bg-slate-800 dark:hover:bg-slate-600 rounded-lg font-semibold text-sm transition-colors"
+        className="flex items-center gap-2 px-4 h-9 bg-slate-200 hover:bg-slate-300 text-text-color dark:bg-slate-800 dark:hover:bg-slate-600 rounded-lg font-semibold text-sm transition-colors"
       >
         <span className="material-symbols-outlined text-lg"><AddIcon /></span>
         Create New Document

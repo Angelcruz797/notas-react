@@ -11,9 +11,6 @@ interface SidebarProps {
   onFileSelect?: () => void;
 }
 
-const STORAGE_TOTAL = 5.0; // GB
-const STORAGE_USED = 3.2; // GB
-
 const navigationItems = [
   { label: 'My Documents', icon: <DescriptionIcon/>, to: '/' },
   { label: 'Shared with me', icon: <GroupIcon/>, to: '/' },
@@ -24,10 +21,6 @@ const navigationItems = [
 export default function Sidebar({ onFileSelect }: SidebarProps) {
   const { user } = useUser();
 
-  const storagePercentage = useMemo(
-    () => (STORAGE_USED / STORAGE_TOTAL) * 100,
-    []
-  );
 
   const handleFileClick = useCallback(() => {
     onFileSelect?.();
@@ -36,9 +29,9 @@ export default function Sidebar({ onFileSelect }: SidebarProps) {
   return (
     <aside className="w-56 shrink-0 bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 flex flex-col">
       {/* Logo Section */}
-      <div className="flex items-center gap-2 p-4 border-b border-slate-200 dark:border-slate-800">
-        <div className="w-7 h-7 bg-primary rounded flex items-center justify-center text-white">
-          <span className="material-symbols-outlined text-lg"><InsertDriveFileIcon /></span>
+      <div className="flex items-center gap-2 p-4 h-16 border-b border-slate-200 dark:border-slate-800">
+        <div className="w-7 h-7 bg-primary rounded flex items-center justify-center text-text-color">
+          <span className="material-symbols-outlined text-sm"><InsertDriveFileIcon /></span>
         </div>
         <h1 className="text-base font-bold text-slate-900 dark:text-white tracking-tight">
           NoteCraft
@@ -58,7 +51,7 @@ export default function Sidebar({ onFileSelect }: SidebarProps) {
             <span>{item.label}</span>
           </div>
         ))}
-        <Divider className="my-2 border-slate-200 dark:border-slate-800" />
+        <Divider className=" border-slate-200 dark:border-slate-800" />
       </nav>
 
       <div className="p-4 border-t border-slate-200 dark:border-slate-800">
