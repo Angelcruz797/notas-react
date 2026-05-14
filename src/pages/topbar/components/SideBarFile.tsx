@@ -4,6 +4,9 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useColor } from "../../../useContext/colorMode/ColorContext";
 import { NavLink, redirect } from "react-router";
+import { useUser } from "../../../useContext/user/userContext";
+import { useEffect } from "react";
+import useFileQuery from "../../../hook/useFileQuery";
 
 type SideBarFileProps = {
     handleDrawerClose: () => void;
@@ -14,6 +17,12 @@ type SideBarFileProps = {
 export default function SideBarFile({handleDrawerClose,open}: SideBarFileProps) {
       const theme = useTheme();
       const {colors} = useColor()
+      const {user}= useUser();
+      const {getFiles} = useFileQuery();
+
+      useEffect(()=>{
+        getFiles();
+      },[])
   return (
     <>
         <Drawer
@@ -52,20 +61,20 @@ export default function SideBarFile({handleDrawerClose,open}: SideBarFileProps) 
               </ListItem>
             </NavLink>
             <Divider className="bg-primary-700 dark:bg-primary-400"/>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
+            {user.files.map((file) => (
+              <ListItem key={file.id} disablePadding>
+                <ListItemButton component={NavLink} to={`/draw/${file.id}`}>
                   <ListItemIcon>
                     <DescriptionIcon className="text-text-color"/>
                   </ListItemIcon>
-                  <ListItemText className="text-text-color" primary={text} />
+                  <ListItemText className="text-text-color" primary={file.fileName} />
                 </ListItemButton>
               </ListItem>
             ))}
           </List>
           <Divider className="bg-primary-700 dark:bg-primary-400"/>
           <List>
-            {['All mail', 'Trash', 'Spam'].map((text) => (
+            {false &&['All mail', 'Trash', 'Spam'].map((text) => (
               <ListItem  key={text} disablePadding>
                 <ListItemButton>
                   <ListItemIcon>

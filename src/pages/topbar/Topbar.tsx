@@ -1,23 +1,18 @@
 import { AppBar, IconButton, Toolbar, Typography } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu'
 import Account from "./components/Account";
-import { useLocation } from "react-router";
 import SideBarFile from "./components/SideBarFile";
-import SaveDraw from "../draw/components/SaveDraw";
 
 type TopbarProps = {
   open: boolean;
   handleDrawerOpen: () => void;
   handleDrawerClose: () => void;
+  title:  string | Promise<string>;
 }
 
-export default function Topbar({open, handleDrawerOpen, handleDrawerClose}:TopbarProps) {
-  const location =useLocation();
-
+export default function Topbar({open, handleDrawerOpen, handleDrawerClose,title}:TopbarProps) {  
   return (
     <>
-    {/* {location.pathname === '/draw' && <SideBarFile handleDrawerClose={handleDrawerClose} open={open} />} */}
-    {/* {location.pathname === '/' && <SideBarFile handleDrawerClose={handleDrawerClose} open={open} />} */}
       <SideBarFile handleDrawerClose={handleDrawerClose} open={open} />
       <AppBar position="static" className={`${open?'ml-60!':''}`}>
         <Toolbar 
@@ -36,9 +31,8 @@ export default function Topbar({open, handleDrawerOpen, handleDrawerClose}:Topba
           {/* )} */}
 
           <Typography variant="h6" className="grow text-text-color">
-            Draw Name
+            {title}
           </Typography>
-          <SaveDraw />
           <Account />
         </Toolbar>
       </AppBar>
