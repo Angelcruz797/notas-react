@@ -1,8 +1,8 @@
 import { toast } from "react-toastify";
 
-export function AlertError(text: string,colorMode?:string) {
+export function AlertError(text: string, colorMode:"dark" | "light") {
   return toast.error(text,{
-        theme: colorMode === 'dark' ? "dark" : "light",
+        theme: colorMode,
         position: "bottom-right",
         autoClose: 3000,
         hideProgressBar: true,

@@ -1,8 +1,8 @@
 import { toast } from "react-toastify";
 
-export default function AlertSuccess(text: string, mode: string) {
+export default function AlertSuccess(text: string, colorMode:"dark" | "light") {
   return toast.success(text,{
-        theme: mode === 'dark' ? "dark" : "light",
+        theme: colorMode,
         position: "bottom-right",
         autoClose: 3000,
         hideProgressBar: true,
