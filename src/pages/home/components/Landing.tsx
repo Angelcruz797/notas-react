@@ -1,73 +1,85 @@
-import AddIcon from '@mui/icons-material/Add';
-import ColorLensIcon from '@mui/icons-material/ColorLens';
-import DescriptionIcon from '@mui/icons-material/Description';
-import { useEffect, useState } from 'react';
-import AddFileDialog from './AddFileDialog';
-import { NavLink, useLocation } from 'react-router';
-import { useUser } from '../../../useContext/user/userContext';
-import { Skeleton } from '@mui/material';
-import useFileQuery from '../../../hook/useFileQuery';
+import { useCallback, useEffect, useState } from "react";
+import AddFileDialog from "./AddFileDialog";
+import TopBar from "./TopBar";
+import DocumentTable from "./DocumentTable";
+import Sidebar from "./Sidebar";
+import { useUser } from "../../../useContext/user/userContext";
+import useFileQuery from "../../../hook/useFileQuery";
 
 export default function Landing() {
-    const [openDialog, setOpenDialog] = useState<boolean>(false);
-    const {user} = useUser();
-    const location = useLocation();
+  const [openDialog, setOpenDialog] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [viewMode, setViewMode] = useState<"list" | "grid">("list");
+  const { user } = useUser();
+  const { getFiles, isLoading } = useFileQuery();
 
-    const { getFiles, isLoading} = useFileQuery();
+  // Load files on mount
+  useEffect(() => {
+    getFiles();
+  }, []);
 
-    useEffect(() => {
-        getFiles();
-    },[])
-
-    const handleClickOpenDialog = () => {
-    setOpenDialog(true);
-    };
-    const handleCloseDialog = () => {
-    setOpenDialog((prev)=>!prev);
-    };
-
-    const username:string = user?.username || 'Unknown';
+  // Filter files based on search query
+  const filteredFiles = useCallback(() => {
+    if (!user?.files) return [];
     
+    if (!searchQuery.trim()) {
+      return user.files;
+    }
+
+    return user.files.filter((file) =>
+      file.fileName.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [user?.files, searchQuery]);
+
+  const handleOpenDialog = useCallback(() => {
+    setOpenDialog(true);
+  }, []);
+
+  const handleCloseDialog = useCallback(() => {
+    setOpenDialog(false);
+  }, []);
+
+  const handleSearch = useCallback((query: string) => {
+    setSearchQuery(query);
+  }, []);
+
+  const handleViewModeChange = useCallback((mode: "list" | "grid") => {
+    setViewMode(mode);
+  }, []);
+
   return (
-    <>
-        <AddFileDialog openDialog={openDialog} handleCloseDialog={handleCloseDialog} />
-        <div className="px-10 pt-14">
-            <h1 className="text-4xl text-text-color mb-6"> Bienvenido {username}</h1>
+    <div className="flex h-screen bg-slate-50 dark:bg-slate-950 overflow-hidden">
+      {/* Sidebar Navigation */}
+      <Sidebar onFileSelect={handleCloseDialog} />
 
-            <div
-            className='grid sm:grid-cols-auto grid-cols-2 items-center gap-6'
-            >
-                <div className="flex flex-col items-center gap-2">
-                    <div 
-                    className="w-36 h-50 bg-white hover:bg-gray-200 active:bg-gray-300 flex items-center justify-center cursor-pointer"
-                    onClick={handleClickOpenDialog}
-                    >
-                        <AddIcon 
-                        className="text-black text-5xl!" 
-                        />
-                    </div>
-                    <span className="text-text-color">Nuevo Documento</span>
-                </div>
-                {isLoading && new Array(4).fill(null).map((_,index)=>
-                <div key={index} className="flex flex-col items-center gap-2">
-                    <Skeleton variant="rectangular" animation='wave' className='w-36 h-50!'/>
-                    <Skeleton variant="rounded" animation='wave' className='w-36 h-6'/>            
-                </div>)}
-                {!isLoading && user.files.map((data) => (
-                <div key={data.id} className="flex flex-col items-center gap-2">
-                    <NavLink to={`/${data.fileType.toLowerCase()}/${data.id}`}>
-                        <div className="w-36 h-50 bg-white flex items-center justify-center cursor-pointer">
-                            {data.fileType==='Draw' ? 
-                            <ColorLensIcon className="text-black text-5xl!" /> :
-                            <DescriptionIcon className="text-black text-5xl!" />}
-                        </div>
-                    </NavLink>
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Top Bar */}
+        <TopBar
+          onSearch={handleSearch}
+          onAddFile={handleOpenDialog}
+          username={user?.username || "User"}
+        />
 
-                    <span className="text-text-color">{data.fileName}</span>
-                </div>
-                ))}
-            </div>
+        {/* Content Area */}
+        <div className="flex-1 overflow-y-auto bg-white dark:bg-slate-900">
+          <main className="max-w-7xl mx-auto py-8 px-8">
+            <DocumentTable
+              files={filteredFiles()}
+              isLoading={isLoading}
+              onAddDocument={handleOpenDialog}
+              viewMode={viewMode}
+              onViewModeChange={handleViewModeChange}
+            />
+          </main>
         </div>
-    </>
-  )
+      </div>
+
+      {/* Add File Dialog */}
+      <AddFileDialog
+        openDialog={openDialog}
+        handleCloseDialog={handleCloseDialog}
+      />
+    </div>
+  );
 }
