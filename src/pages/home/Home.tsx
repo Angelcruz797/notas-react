@@ -1,10 +1,9 @@
 import { Outlet, useLocation, useParams } from 'react-router';
-import Topbar from '../topbar/Topbar';
+import Topbar from '../files/components/Topbar';
 import { useEffect, useState, useMemo } from 'react';
 import useFileQuery from '../../hook/useFileQuery';
 
 export default function Home() {
-  const [open, setOpen] = useState(false);
   const [titleBar, setTitleBar] = useState<string>("");
   const location = useLocation();
   const { id } = useParams();
@@ -12,14 +11,6 @@ export default function Home() {
 
   // Check if current route is the landing page
   const isLandingPage = useMemo(() => location.pathname === '/', [location.pathname]);
-  
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
 
   useEffect(() => {
     const getTitle = async () => {
@@ -30,7 +21,11 @@ export default function Home() {
         case `/draw/${id}`:
         case `/text/${id}`:
           const fileById = await getFileById(id!);
-          setTitleBar(fileById ? fileById.fileName : 'File');
+          if (fileById) {
+            setTitleBar(fileById.fileName);
+          } else {
+            setTitleBar('File');
+          }
           break;
         default:
           setTitleBar('Unknown Page');
@@ -38,7 +33,7 @@ export default function Home() {
       }
     };
     getTitle();
-  }, [location.pathname, id, getFileById]);
+  }, [location.pathname]);
 
   // Landing page has its own layout, don't show the global Topbar for it
   if (isLandingPage) {
@@ -48,12 +43,9 @@ export default function Home() {
   return (
     <>
       <Topbar 
-        open={open} 
-        handleDrawerOpen={handleDrawerOpen} 
-        handleDrawerClose={handleDrawerClose} 
         title={titleBar}
       />
-      <div className={`${open ? 'ml-60!' : ''} duration-50 scroll-auto`}>
+      <div className="duration-50 scroll-auto">
         <Outlet />
       </div>
     </>

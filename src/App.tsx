@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router'
 import { useColor } from './useContext/colorMode/ColorContext'
-import Draw from './pages/draw/Draw'
+import Draw from './pages/files/draw/Draw'
 import Home from './pages/home/Home'
 import Landing from './pages/home/components/Landing'
 import Error404 from './pages/error/Error404'

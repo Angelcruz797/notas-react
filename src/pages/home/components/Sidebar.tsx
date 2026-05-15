@@ -1,11 +1,12 @@
 import { useUser } from "../../../useContext/user/userContext";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import StarIcon from '@mui/icons-material/Star';
 import DeleteIcon from '@mui/icons-material/Delete';
 import GroupIcon from '@mui/icons-material/Group';
 import DescriptionIcon from '@mui/icons-material/Description';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import { Divider } from "@mui/material";
+import Account from "./Account";
 
 interface SidebarProps {
   onFileSelect?: () => void;
@@ -54,21 +55,8 @@ export default function Sidebar({ onFileSelect }: SidebarProps) {
         <Divider className=" border-slate-200 dark:border-slate-800" />
       </nav>
 
-      <div className="p-4 border-t border-slate-200 dark:border-slate-800">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-sm font-bold">
-            {(user?.username || "U").charAt(0).toUpperCase()}
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="text-sm font-medium text-slate-900 dark:text-white truncate">
-              {user?.username || "User"}
-            </div>
-            <div className="text-xs text-slate-500 dark:text-slate-400 truncate">
-              {user?.email || "user@doccraft.ai"}
-            </div>
-          </div>
-        </div>
-      </div>
+        {/* User Profile Section */}
+        <Account user={user} />
     </aside>
   );
 }

@@ -1,18 +1,10 @@
 import {createContext ,useContext} from 'react';
+import type { FileData } from '../../interfaces/FileData';
 
 export interface UserContextType {
     user:UserType;
     setAccount: (user:UserType) => void;
-    setFiles?: (files: File[]) => void;
-}
- 
-export interface File {
-  id: string;
-  fileName: string;
-  content: string;
-  fileType: string;
-  createDate: Date;
-  lastUpdatedDate: Date;
+    setFiles?: (files: FileData[]) => void;
 }
 
 export interface UserType {
@@ -21,7 +13,7 @@ export interface UserType {
     lastName: string;
     username: string;
     email: string;
-    files: File[];
+    files: FileData[];
 };
 
 export const UserContext = createContext<UserContextType | undefined>(undefined);

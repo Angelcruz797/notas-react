@@ -1,13 +1,19 @@
-import { AccountCircle, Logout, Settings, Tune } from "@mui/icons-material"
-import { Box, Tooltip, Typography, IconButton, Avatar, Menu, MenuItem, ListItemIcon, Divider } from "@mui/material"
+import { AccountCircle, Logout, Settings } from "@mui/icons-material"
+import {Menu, MenuItem, ListItemIcon, Divider } from "@mui/material"
 import { useState, type MouseEvent } from "react"
 import { useColor } from "../../../useContext/colorMode/ColorContext";
 
-export default function Account() {
+type AccountProps = {
+    user: {
+        username: string;
+        email: string;
+    } | null;
+}
+
+export default function Account({user}: AccountProps) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-      const {colors, changeColor } = useColor();
+      const {colors } = useColor();
     const open = Boolean(anchorEl);
-    const username: string = "Jane Doe";
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -17,35 +23,28 @@ export default function Account() {
     setAnchorEl(null)
   }
 
-    return (
-        <>
-        <Box 
-        className="flex items-center cursor-pointer"
-        onClick={handleClick}
-        >
-          <div className="text-text-color!">
-            <Typography
-              variant="body1" 
-              className="mr-0.5 hidden text-text-color! sm:block"
-            >
-              {username}
-            </Typography>
+    return (<>
+      <div 
+      className="p-4 border-t border-slate-200 dark:border-slate-800 cursor-pointer"
+      onClick={handleClick}
+      >
+        <div className="flex items-center gap-2">
+          <div 
+          className="w-8 h-8 rounded-full bg-slate-500 text-white 
+          flex items-center justify-center text-sm font-bold"
+          >
+            {(user?.username || "U").charAt(0).toUpperCase()}
           </div>
-
-          <Tooltip title="Account settings">
-            <IconButton
-              size="small"
-              className="p-0"
-              aria-controls={open ? 'account-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? 'true' : undefined}
-            >
-              <Avatar alt={username}>
-                {username[0]}
-              </Avatar>
-            </IconButton>
-          </Tooltip>
-      </Box>
+          <div className="flex-1 min-w-0">
+            <div className="text-sm font-medium text-slate-900 dark:text-white truncate">
+              {user?.username || "User"}
+            </div>
+            <div className="text-xs text-slate-500 dark:text-slate-400 truncate">
+              {user?.email || "user@doccraft.ai"}
+            </div>
+          </div>
+        </div>
+      </div>
       <Menu
         anchorEl={anchorEl}
         id="account-menu"
@@ -73,21 +72,10 @@ export default function Account() {
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem onClick={() =>{
-          handleClose();
-          changeColor();
-        }}
-        sx={{color: colors.letters}}
-        >
-          <ListItemIcon>
-            <Tune sx={{color: colors.letters}} fontSize="small" />
-          </ListItemIcon>
-          Preferences
-        </MenuItem>
         <Divider className="bg-primary-600 dark:bg-primary-400"/>
         <MenuItem onClick={handleClose} sx={{color: colors.letters}}>
           <ListItemIcon>
-            <Logout 
+            <Logout
             sx={{color: colors.letters}} 
             fontSize="small" 
             />

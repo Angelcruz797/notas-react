@@ -7,13 +7,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import GridViewIcon from '@mui/icons-material/GridView';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-
-interface FileData {
-  id: string;
-  fileName: string;
-  fileType: "Draw" | "Text";
-  lastUpdatedDate: string;
-}
+import type { FileData } from "../../../interfaces/FileData";
 
 interface DocumentTableProps {
   files: FileData[];
@@ -61,14 +55,7 @@ export default function DocumentTable({
         onClick={onAddDocument}
         className="h-40 border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-lg flex flex-col items-center justify-center cursor-pointer transition-all duration-200 bg-white dark:bg-slate-800 hover:border-primary hover:bg-slate-50 dark:hover:bg-slate-700/50"
       >
-        <AddIcon
-          sx={{
-            fontSize: 40,
-            color: "#1a6ef5",
-            opacity: 0.7,
-            marginBottom: 1,
-          }}
-        />
+        <AddIcon className="text-4xl opacity-70 mb-1" />
         <span className="text-sm font-semibold text-slate-900 dark:text-white">
           New Document
         </span>

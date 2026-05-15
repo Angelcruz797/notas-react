@@ -1,8 +1,8 @@
 import { useParams } from "react-router";
 import { Tldraw } from "tldraw";
 import 'tldraw/tldraw.css'
-import Error404 from "../error/Error404";
-import useFileQuery from "../../hook/useFileQuery";
+import Error404 from "../../error/Error404";
+import useFileQuery from "../../../hook/useFileQuery";
 import { useEffect, useState } from "react";
 
 export default function Draw() {
@@ -16,7 +16,7 @@ export default function Draw() {
       setCurrentFile(file || null);
     }
     fetchFile();
-  },[id]);
+  },[]);
 
   if(isLoading) return <div className="w-full h-screen flex items-center justify-center"><span className="text-2xl text-text-color">Loading...</span></div>;
   if(!isLoading && currentFile == null) return <Error404/>;
