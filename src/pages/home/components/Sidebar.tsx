@@ -34,7 +34,7 @@ export default function Sidebar({ onFileSelect }: SidebarProps) {
         <div className="w-7 h-7 bg-primary rounded flex items-center justify-center text-text-color">
           <span className="material-symbols-outlined text-sm"><InsertDriveFileIcon /></span>
         </div>
-        <h1 className="text-base font-bold text-slate-900 dark:text-white tracking-tight">
+        <h1 className="text-base font-bold text-text-color dark:text-white tracking-tight">
           NoteCraft
         </h1>
       </div>

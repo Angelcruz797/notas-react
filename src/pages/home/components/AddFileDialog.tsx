@@ -4,6 +4,7 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import PaletteIcon from '@mui/icons-material/Palette';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CloseIcon from '@mui/icons-material/Close';
+import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from "react-router";
 import useFileMutations from "../../../hook/useFileMutations";
 import { AlertError } from "../../../helpers/AlertError";
@@ -67,29 +68,35 @@ export default function AddFileDialog({openDialog: open, handleCloseDialog}: Add
       maxWidth="sm"
       fullWidth
       sx={{
-        className: "bg-white! dark:bg-slate-900!"
+        ['& .MuiDialog-paper']:{
+          backgroundColor: colors.mode === 'dark' ? colors.primary[800] : colors.primary[100],
+          color: colors.letters,
+        },
+        ['& .text-text-color']: {
+          color: colors.letters,
+        },
       }}
     >
-      <div className="relative p-6 pt-2 bg-white! dark:bg-slate-900!">
+      <div className="relative p-6 rotate-lg">
         {/* Close Button */}
         <IconButton
           aria-label="close"
           onClick={handleCloseDialog}
-          className="absolute! right-3 top-3"
+          className="absolute! right-3 top-3 text-slate-400!"
           size="small"
         >
           <CloseIcon />
         </IconButton>
 
         {/* Title */}
-        <DialogTitle className="p-0 text-slate-900 dark:text-white text-2xl font-bold">
+        <DialogTitle className="p-0 text-2xl text-text-color font-bold">
           Create New Document
         </DialogTitle>
 
         {/* File Name Input */}
         <div className="mb-6">
           <div className="flex items-center border border-slate-300 dark:border-slate-700 rounded-lg overflow-hidden bg-slate-50 dark:bg-slate-800 focus-within:ring-2 focus-within:ring-primary">
-            <span className="material-symbols-outlined text-slate-400 px-3">edit</span>
+            <span className="material-symbols-outlined px-3 text-slate-400!">< EditIcon/></span>
             <input
               type="text"
               value={fileName}
@@ -107,7 +114,7 @@ export default function AddFileDialog({openDialog: open, handleCloseDialog}: Add
 
         {/* File Type Options */}
         <div className="space-y-2">
-          <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-4">
+          <p className="text-xs font-semibold text-text-color dark:text-slate-400 uppercase tracking-wider mb-4">
             Select document type
           </p>
 
@@ -121,7 +128,7 @@ export default function AddFileDialog({openDialog: open, handleCloseDialog}: Add
                 <span className="material-symbols-outlined"><DescriptionIcon /></span>
               </div>
               <div className="flex-1 text-left">
-                <p className="text-sm font-semibold text-slate-900 dark:text-white">Text Document</p>
+                <p className="text-sm font-semibold text-text-color">Text Document</p>
                 <p className="text-xs text-slate-500 dark:text-slate-400">Create a new document</p>
               </div>
               <span className="material-symbols-outlined text-slate-400"><ArrowForwardIcon /></span>
@@ -138,8 +145,8 @@ export default function AddFileDialog({openDialog: open, handleCloseDialog}: Add
                 <span className="material-symbols-outlined"><PaletteIcon /></span>
               </div>
               <div className="flex-1 text-left">
-                <p className="text-sm font-semibold text-slate-900 dark:text-white">Drawing</p>
-                <p className="text-xs text-slate-500 dark:text-slate-400">Create a new drawing</p>
+                <p className="text-sm font-semibold text-text-color">Drawing</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 ">Create a new drawing</p>
               </div>
               <span className="material-symbols-outlined text-slate-400"><ArrowForwardIcon /></span>
             </div>

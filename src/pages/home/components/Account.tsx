@@ -30,7 +30,7 @@ export default function Account({user}: AccountProps) {
       >
         <div className="flex items-center gap-2">
           <div 
-          className="w-8 h-8 rounded-full bg-slate-500 text-white 
+          className="w-8 h-8 rounded-full text-white 
           flex items-center justify-center text-sm font-bold"
           >
             {(user?.username || "U").charAt(0).toUpperCase()}
@@ -55,7 +55,7 @@ export default function Account({user}: AccountProps) {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         sx={{
           ['& .MuiMenu-list']:{
-            backgroundColor: colors.primary[500],
+            backgroundColor: colors.mode === 'dark' ? colors.primary[800] : colors.primary[100],
           }
         }}
       >
@@ -65,14 +65,14 @@ export default function Account({user}: AccountProps) {
           </ListItemIcon>
           Account
         </MenuItem>
-        <Divider className="bg-primary-600 dark:bg-primary-400" />
+        <Divider className="bg-slate-600" />
         <MenuItem onClick={handleClose} sx={{color: colors.letters}}>
           <ListItemIcon>
             <Settings sx={{color: colors.letters}} fontSize="small" />
           </ListItemIcon>
           Settings
         </MenuItem>
-        <Divider className="bg-primary-600 dark:bg-primary-400"/>
+        <Divider className="bg-slate-600" />
         <MenuItem onClick={handleClose} sx={{color: colors.letters}}>
           <ListItemIcon>
             <Logout
