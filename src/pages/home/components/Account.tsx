@@ -38,7 +38,7 @@ export default function Account({user}: AccountProps) {
               {user?.username || "User"}
             </div>
             <div className="text-xs text-slate-500 dark:text-slate-400 truncate">
-              {user?.email || "user@doccraft.ai"}
+              {user?.email || "user@notecraft.com"}
             </div>
           </div>
         </div>
