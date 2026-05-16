@@ -49,8 +49,8 @@ export default function Account({user}: AccountProps) {
         open={open}
         onClose={handleClose}
         onClick={handleClose}
-        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+        transformOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
         sx={{
           ['& .MuiMenu-list']:{
             backgroundColor: colors.mode === 'dark' ? colors.primary[800] : colors.primary[100],
