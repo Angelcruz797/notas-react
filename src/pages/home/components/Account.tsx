@@ -2,12 +2,10 @@ import { AccountCircle, Logout, Settings } from "@mui/icons-material"
 import {Menu, MenuItem, ListItemIcon, Divider } from "@mui/material"
 import { useState, type MouseEvent } from "react"
 import { useColor } from "../../../useContext/colorMode/ColorContext";
+import type { UserType } from "../../../interfaces/UserType";
 
 type AccountProps = {
-    user: {
-        username: string;
-        email: string;
-    } | null;
+    user: UserType;
 }
 
 export default function Account({user}: AccountProps) {
