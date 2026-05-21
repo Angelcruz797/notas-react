@@ -2,11 +2,7 @@ import { Skeleton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router";
-import BrushIcon from '@mui/icons-material/Brush';
-import ArticleIcon from '@mui/icons-material/Article';
-import ViewListIcon from '@mui/icons-material/ViewList';
-import GridViewIcon from '@mui/icons-material/GridView';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import {Cloud , MoreHoriz, GridView, ViewList, Article, Brush} from '@mui/icons-material';
 import type { FileData } from "../../../interfaces/FileData";
 
 interface DocumentTableProps {
@@ -37,7 +33,7 @@ export default function DocumentTable({
   );
 
   const getFileIcon = (fileType: string) => {
-    return fileType === "Draw" ? <BrushIcon /> : <ArticleIcon/>;
+    return fileType === "Draw" ? <Brush /> : <Article/>;
   };
 
   const getIconBgColor = (fileType: string) => {
@@ -182,7 +178,7 @@ export default function DocumentTable({
                   <td className="px-6 py-4 text-right">
                     <button className="text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
                       <span className="material-symbols-outlined">
-                        <MoreHorizIcon />
+                        <MoreHoriz />
                       </span>
                     </button>
                   </td>
@@ -195,7 +191,7 @@ export default function DocumentTable({
       {!isLoading && files.length === 0 && (
         <div className="bg-slate-50 dark:bg-slate-700/30 py-12 flex flex-col items-center justify-center text-slate-400">
           <span className="material-symbols-outlined text-4xl mb-2 opacity-20">
-            cloud_done
+            <Cloud fontSize="large"/>
           </span>
           <p className="text-sm italic">No documents found</p>
           <button
@@ -240,7 +236,7 @@ export default function DocumentTable({
             }`}
             title="List view"
           >
-            <span className="material-symbols-outlined text-lg"><ViewListIcon/></span>
+            <span className="material-symbols-outlined text-lg"><ViewList/></span>
           </button>
           <button
             onClick={() => onViewModeChange("grid")}
@@ -251,7 +247,7 @@ export default function DocumentTable({
             }`}
             title="Grid view"
           >
-            <span className="material-symbols-outlined text-lg"><GridViewIcon/></span>
+            <span className="material-symbols-outlined text-lg"><GridView/></span>
           </button>
         </div>
       </div>
