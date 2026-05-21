@@ -194,12 +194,6 @@ export default function DocumentTable({
             <Cloud fontSize="large"/>
           </span>
           <p className="text-sm italic">No documents found</p>
-          <button
-            onClick={onAddDocument}
-            className="mt-4 bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
-          >
-            Create your first document
-          </button>
         </div>
       )}
 
