@@ -9,7 +9,7 @@ import { useNavigate } from "react-router";
 import useFileMutations from "../../../hook/useFileMutations";
 import { AlertError } from "../../../helpers/AlertError";
 import AlertSuccess from "../../../helpers/AlertSuccess";
-import { useColor } from "../../../useContext/colorMode/ColorContext";
+import { useColorStore } from "../../../store/useColorStore";
 
 type AddFileProps = {
     openDialog: boolean;
@@ -30,7 +30,7 @@ export default function AddFileDialog({openDialog: open, handleCloseDialog}: Add
   const [isValidation, setIsValidation] = useState<boolean>(false);
   const { createFile } = useFileMutations();
   const navigate = useNavigate();
-  const {colors} = useColor();
+  const { colors } = useColorStore();
 
   const handleFileNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFileName(event.target.value);

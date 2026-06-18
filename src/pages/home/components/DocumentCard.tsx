@@ -1,7 +1,7 @@
 import { Skeleton } from "@mui/material";
 import DescriptionIcon from "@mui/icons-material/Description";
 import ColorLensIcon from "@mui/icons-material/ColorLens";
-import { useColor } from "../../../useContext/colorMode/ColorContext";
+import { useColorStore } from "../../../store/useColorStore";
 import { useCallback } from "react";
 
 interface DocumentCardProps {
@@ -19,7 +19,7 @@ export default function DocumentCard({
   isLoading = false,
   onSelect,
 }: DocumentCardProps) {
-  const { colors } = useColor();
+  const { colors } = useColorStore();
 
   const handleClick = useCallback(() => {
     onSelect?.(id, fileType);

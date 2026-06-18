@@ -1,4 +1,4 @@
-import { useUser } from "../../../useContext/user/userContext";
+import { useUserStore } from "../../../store/useUserStore";
 import { useCallback } from "react";
 import StarIcon from '@mui/icons-material/Star';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -20,7 +20,7 @@ const navigationItems = [
 ];
 
 export default function Sidebar({ onFileSelect }: SidebarProps) {
-  const { user } = useUser();
+  const { user } = useUserStore();
 
 
   const handleFileClick = useCallback(() => {

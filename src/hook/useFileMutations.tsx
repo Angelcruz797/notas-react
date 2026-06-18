@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { addFileAsync, fetchFilesAsync } from "../utils/fetchFiles";
-import { useUser } from "../useContext/user/userContext";
 import { AlertError } from "../helpers/AlertError";
-import { useColor } from "../useContext/colorMode/ColorContext";
+import { useUserStore } from "../store/useUserStore";
+import { useColorStore } from "../store/useColorStore";
 
 export default function useFileMutations() {
-  const { setFiles } = useUser();
+  const { setFiles } = useUserStore();
   const [isLoading, setIsLoading] = useState(false);
-  const {colors} = useColor();
+  const { colors } = useColorStore();
 
   // Crear archivo
   const createFile = async (file: { fileType: string; fileName: string }) => {

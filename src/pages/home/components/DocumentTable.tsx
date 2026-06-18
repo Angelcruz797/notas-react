@@ -1,14 +1,13 @@
 import { Skeleton } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router";
-import {Cloud , MoreHoriz, GridView, ViewList, Article, Brush} from '@mui/icons-material';
+import {Cloud , MoreHoriz, GridView, ViewList, Article, Brush, Refresh, Add} from '@mui/icons-material';
 import type { FileData } from "../../../interfaces/FileData";
+import useFileQuery from "../../../hook/useFileQuery";
 
 interface DocumentTableProps {
   files: FileData[];
   isLoading: boolean;
-  onAddDocument: () => void;
   viewMode: "list" | "grid";
   onViewModeChange: (mode: "list" | "grid") => void;
 }
@@ -18,16 +17,17 @@ type FilterTab = "All Files" | "Recent" | "Drafts";
 export default function DocumentTable({
   files,
   isLoading,
-  onAddDocument,
   viewMode,
   onViewModeChange,
 }: DocumentTableProps) {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<FilterTab>("All Files");
 
+  const {getFiles} = useFileQuery();
+
   const handleDocumentClick = useCallback(
     (id: string, fileType: string) => {
-      navigate(`/${fileType.toLowerCase()}/${id}`);
+      navigate(`/view/${fileType.toLowerCase()}/${id}`);
     },
     [navigate]
   );
@@ -50,17 +50,6 @@ export default function DocumentTable({
   // Grid View Component
   const renderGridView = () => (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {/* Add New Document Button */}
-      <div
-        onClick={onAddDocument}
-        className="h-40 border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-lg flex flex-col items-center justify-center cursor-pointer transition-all duration-200 bg-white dark:bg-slate-800 hover:border-primary hover:bg-slate-50 dark:hover:bg-slate-700/50"
-      >
-        <AddIcon className="text-4xl opacity-70 mb-1" />
-        <span className="text-sm font-semibold text-slate-900 dark:text-white">
-          New Document
-        </span>
-      </div>
-
       {/* Loading State */}
       {isLoading
         ? Array(4)
