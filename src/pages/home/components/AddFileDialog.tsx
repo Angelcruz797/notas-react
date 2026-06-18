@@ -1,10 +1,6 @@
-import { Dialog, DialogTitle, IconButton, List, ListItem, ListItemButton, ListItemText, Slide, type Transitions } from "@mui/material";
+import { Dialog, DialogTitle, IconButton, ListItemButton, Slide, type Transitions } from "@mui/material";
 import { forwardRef, useState, type ReactElement, type Ref } from "react";
-import DescriptionIcon from '@mui/icons-material/Description';
-import PaletteIcon from '@mui/icons-material/Palette';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import CloseIcon from '@mui/icons-material/Close';
-import EditIcon from '@mui/icons-material/Edit';
+import { Edit, Description, Close, Palette, ArrowForward} from '@mui/icons-material';
 import { useNavigate } from "react-router";
 import useFileMutations from "../../../hook/useFileMutations";
 import { AlertError } from "../../../helpers/AlertError";
@@ -85,7 +81,7 @@ export default function AddFileDialog({openDialog: open, handleCloseDialog}: Add
           className="absolute! right-3 top-3 text-slate-400!"
           size="small"
         >
-          <CloseIcon />
+          <Close />
         </IconButton>
 
         {/* Title */}
@@ -96,7 +92,7 @@ export default function AddFileDialog({openDialog: open, handleCloseDialog}: Add
         {/* File Name Input */}
         <div className="mb-6">
           <div className="flex items-center border border-slate-300 dark:border-slate-700 rounded-lg overflow-hidden bg-slate-50 dark:bg-slate-800 focus-within:ring-2 focus-within:ring-primary">
-            <span className="material-symbols-outlined px-3 text-slate-400!">< EditIcon/></span>
+            <span className="material-symbols-outlined px-3 text-slate-400!"><Edit /></span>
             <input
               type="text"
               value={fileName}
@@ -125,13 +121,13 @@ export default function AddFileDialog({openDialog: open, handleCloseDialog}: Add
           >
             <div className="flex items-center gap-3 w-full">
               <div className="w-10 h-10 rounded bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center text-blue-600">
-                <span className="material-symbols-outlined"><DescriptionIcon /></span>
+                <span className="material-symbols-outlined"><Description /></span>
               </div>
               <div className="flex-1 text-left">
                 <p className="text-sm font-semibold text-text-color">Text Document</p>
                 <p className="text-xs text-slate-500 dark:text-slate-400">Create a new document</p>
               </div>
-              <span className="material-symbols-outlined text-slate-400"><ArrowForwardIcon /></span>
+              <span className="material-symbols-outlined text-slate-400"><ArrowForward /></span>
             </div>
           </ListItemButton>
 
@@ -142,13 +138,13 @@ export default function AddFileDialog({openDialog: open, handleCloseDialog}: Add
           >
             <div className="flex items-center gap-3 w-full">
               <div className="w-10 h-10 rounded bg-green-50 dark:bg-green-900/30 flex items-center justify-center text-green-600">
-                <span className="material-symbols-outlined"><PaletteIcon /></span>
+                <span className="material-symbols-outlined"><Palette /></span>
               </div>
               <div className="flex-1 text-left">
                 <p className="text-sm font-semibold text-text-color">Drawing</p>
                 <p className="text-xs text-slate-500 dark:text-slate-400 ">Create a new drawing</p>
               </div>
-              <span className="material-symbols-outlined text-slate-400"><ArrowForwardIcon /></span>
+              <span className="material-symbols-outlined text-slate-400"><ArrowForward /></span>
             </div>
           </ListItemButton>
         </div>
