@@ -1,6 +1,5 @@
-import { Outlet, useLocation, useParams } from 'react-router';
-import { useEffect, useState, useMemo, useCallback } from 'react';
-import useFileQuery from '../../hook/useFileQuery';
+import { Outlet, useLocation } from 'react-router';
+import { useState, useMemo, useCallback } from 'react';
 import TopBar from '../../components/TopBar';
 import {LightMode, DarkMode, Search, Add} from '@mui/icons-material';
 import { useUserStore } from '../../store/useUserStore';

@@ -1,7 +1,7 @@
 import { Skeleton } from "@mui/material";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router";
-import {Cloud , MoreHoriz, GridView, ViewList, Article, Brush, Refresh, Add} from '@mui/icons-material';
+import {Cloud , MoreHoriz, GridView, ViewList, Article, Brush, Refresh} from '@mui/icons-material';
 import type { FileData } from "../../../interfaces/FileData";
 import useFileQuery from "../../../hook/useFileQuery";
 

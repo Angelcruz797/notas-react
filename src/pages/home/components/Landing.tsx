@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 import DocumentTable from "./DocumentTable";
-import Sidebar from "./Sidebar";
 import { useUserStore } from "../../../store/useUserStore";
 import useFileQuery from "../../../hook/useFileQuery";
 
