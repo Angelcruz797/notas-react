@@ -43,6 +43,10 @@ export default function DocumentTable({
     return "bg-blue-50 dark:bg-blue-900/30 text-primary";
   };
 
+  const reRenderDocuments = useCallback(() => {
+    getFiles();
+  },[]);
+
   // Grid View Component
   const renderGridView = () => (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -194,6 +198,12 @@ export default function DocumentTable({
             <Cloud fontSize="large"/>
           </span>
           <p className="text-sm italic">No documents found</p>
+          <span className="cursor-pointer flex flex-col mt-2 items-center" onClick={() =>reRenderDocuments()}>
+            <Refresh fontSize="medium" />
+            <p className="text-sm text-slate-500 dark:text-slate-400">
+              Reload
+            </p>
+          </span>
         </div>
       )}
 
