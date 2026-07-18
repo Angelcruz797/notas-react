@@ -1,13 +1,14 @@
 import { Route, Routes } from 'react-router'
-import { useColor } from './useContext/colorMode/ColorContext'
-import Draw from './pages/draw/Draw'
+import { useColorStore } from './store/useColorStore'
+import Draw from './pages/fileView/draw/Draw'
 import Home from './pages/home/Home'
 import Landing from './pages/home/components/Landing'
 import Error404 from './pages/error/Error404'
 import { ToastContainer, Slide } from 'react-toastify'
+import { File } from './pages/fileView/File'
 
 function App() {
-      const { colors } = useColor();
+      const { colors } = useColorStore();
   return (
     <>
       <div data-theme={colors.mode === 'dark' ? "dark" : "light"} className='bg-secondary-500 min-h-screen fixed w-full duration-300'>
@@ -15,8 +16,10 @@ function App() {
           {/* <Route path="/" element={<Home />} /> */}
           <Route path='/' element={<Home />}>
             <Route path='/' element={<Landing />} />
-            <Route path="/draw/:id" element={<Draw />} />
             <Route path='/*' element={<Error404 />} />
+          </Route>
+          <Route path="/view/" element={<File />}>
+            <Route path="/view/draw/:id" element={<Draw />} />
           </Route>
         </Routes>
         <ToastContainer

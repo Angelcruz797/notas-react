@@ -1,7 +1,7 @@
 import { Environment } from "../data/Enviroment";
-import type { File } from "../useContext/user/userContext";
+import type { FileData } from "../interfaces/FileData";
 
-export const fetchFilesAsync: () => Promise<File[]> = async () => {
+export const fetchFilesAsync: () => Promise<FileData[]> = async () => {
     try {
       const response = await fetch(`${Environment.apiUrl}/api/files`);
       if (!response.ok) {
@@ -15,7 +15,7 @@ export const fetchFilesAsync: () => Promise<File[]> = async () => {
     }
 }
 
-export const addFileAsync: (file:{fileName:string, fileType:string}) => Promise<File> =
+export const addFileAsync: (file:{fileName:string, fileType:string}) => Promise<FileData> =
  async (file: {fileName:string, fileType:string}) => {
   try {
     const response = await fetch(`${Environment.apiUrl}/api/files`, {
@@ -36,7 +36,7 @@ export const addFileAsync: (file:{fileName:string, fileType:string}) => Promise<
   }
 }
 
-export const findFileByIdAsync: (id:string) => Promise<File | null> = async (id:string) => {
+export const findFileByIdAsync: (id:string) => Promise<FileData | null> = async (id:string) => {
   try {
     const response = await fetch(`${Environment.apiUrl}/api/files/${id}`);
     if (!response.ok) {

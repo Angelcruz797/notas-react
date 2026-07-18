@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { fetchFilesAsync, findFileByIdAsync } from "../utils/fetchFiles";
-import { useUser, type File } from "../useContext/user/userContext";
 import { AlertError } from "../helpers/AlertError";
-import { useColor } from "../useContext/colorMode/ColorContext";
+import { useUserStore } from "../store/useUserStore";
+import { useColorStore } from "../store/useColorStore";
 
 export default function useFileQuery() {
-    const {setFiles} = useUser();
+    const { setFiles } = useUserStore();
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const {colors} = useColor();
+    const { colors } = useColorStore();
     
     const getFiles=async()=>{
         try {
             setIsLoading(true);
-            const files:File[] = await fetchFilesAsync();
+            const files = await fetchFilesAsync();
             await setFiles!(files);
             setIsLoading(false);
         } catch (error) {
