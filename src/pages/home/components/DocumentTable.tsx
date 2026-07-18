@@ -1,9 +1,10 @@
 import { Skeleton } from "@mui/material";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router";
-import {Cloud , MoreHoriz, GridView, ViewList, Article, Brush, Refresh} from '@mui/icons-material';
+import {Cloud , MoreHoriz, GridView, ViewList, Article, Brush, Refresh, Edit, Delete } from '@mui/icons-material';
 import type { FileData } from "../../../interfaces/FileData";
 import useFileQuery from "../../../hook/useFileQuery";
+import Dropdown from "../../../components/Dropdown";
 
 interface DocumentTableProps {
   files: FileData[];
@@ -168,12 +169,20 @@ export default function DocumentTable({
                       year: "numeric",
                     })}
                   </td>
-                  <td className="px-6 py-4 text-right">
-                    <button className="text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
-                      <span className="material-symbols-outlined">
-                        <MoreHoriz />
-                      </span>
-                    </button>
+                  <td className="px-6 py-4 text-right" onClick={(e) => e.stopPropagation()}>
+                    <Dropdown
+                      trigger={            
+                        <button className="text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
+                          <span className="material-symbols-outlined">
+                            <MoreHoriz />
+                          </span>
+                        </button>
+                      }
+                      items={[
+                        { label: "Rename", icon: <Edit /> },
+                        { label: "Delete", icon: <Delete /> },
+                      ]}
+                    />
                   </td>
                 </tr>
               ))}
