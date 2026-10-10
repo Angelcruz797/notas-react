@@ -1,9 +1,17 @@
 import { Environment } from "../data/Enviroment";
 import type { FileData } from "../interfaces/FileData";
+import { useUserStore } from "../store/useUserStore";
+
+const token = useUserStore.getState().user.token;
 
 export const fetchFilesAsync: () => Promise<FileData[]> = async () => {
     try {
-      const response = await fetch(`${Environment.apiUrl}/api/files`);
+      const response = await fetch(`${Environment.apiUrl}/api/files`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }});
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -22,6 +30,7 @@ export const addFileAsync: (file:{fileName:string, fileType:string}) => Promise<
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify(file),
     });
@@ -38,7 +47,12 @@ export const addFileAsync: (file:{fileName:string, fileType:string}) => Promise<
 
 export const findFileByIdAsync: (id:string) => Promise<FileData | null> = async (id:string) => {
   try {
-    const response = await fetch(`${Environment.apiUrl}/api/files/${id}`);
+    const response = await fetch(`${Environment.apiUrl}/api/files/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }});
     if (!response.ok) {
       throw new Error('Failed to fetch file');
     }

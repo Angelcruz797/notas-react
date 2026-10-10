@@ -1,15 +1,23 @@
 import { AccountCircle, Logout, Settings } from "@mui/icons-material"
 import Dropdown, { type DropdownItem } from "../../../components/Dropdown";
 import { useUserStore } from "../../../store/useUserStore";
-
-const menuItems: DropdownItem[] = [
-  { icon: <AccountCircle />, label: "Account", dividerAfter: true },
-  { icon: <Settings />, label: "Settings", dividerAfter: true },
-  { icon: <Logout />, label: "Logout" },
-]
+import { useNavigate } from "react-router";
 
 export default function Account(){
-  const {user} = useUserStore();
+  const {user, logout} = useUserStore();
+  const navigate = useNavigate();
+
+  const singOut = () => {
+  logout();
+  navigate("/auth/login");
+  }
+
+  const menuItems: DropdownItem[] = [
+    { icon: <AccountCircle />, label: "Account", dividerAfter: true},
+    { icon: <Settings />, label: "Settings", dividerAfter: true },
+    { icon: <Logout />, label: "Logout", onClick: () => singOut() },
+  ]
+
   return (
     <Dropdown
       id="account-menu"
