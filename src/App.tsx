@@ -14,7 +14,7 @@ function App() {
       const { colors } = useColorStore();
   return (
     <>
-      <div data-theme={colors.mode === 'dark' ? "dark" : "light"} className='bg-secondary-500 min-h-screen fixed w-full duration-300'>
+      <div data-theme={colors.mode} className='bg-secondary-500 min-h-screen fixed w-full duration-300'>
         <Routes>
           <Route element={<Auth />}>
             <Route path='/auth/login' element={<Login />} />
