@@ -8,8 +8,8 @@ export default function Account(){
   const navigate = useNavigate();
 
   const singOut = () => {
-  logout();
-  navigate("/auth/login");
+    logout();
+    navigate("/auth/login");
   }
 
   const menuItems: DropdownItem[] = [
