@@ -1,25 +1,16 @@
 import { Navigate, Outlet } from "react-router";
 import { useUserStore } from "../store/useUserStore";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 
 const ProtectedRoute = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [isAuthorized, setIsAuthorized] = useState(false);
-  const { isTokenValid, user } = useUserStore();
+  const { isTokenValid, validToken, token } = useUserStore();
 
-  useEffect(() => {
-    const verifyAuth = () => {
-      const isValid = isTokenValid();
+  useLayoutEffect(() => {
+    isTokenValid();
+    setIsLoading(false);
 
-      setIsAuthorized(isValid);
-
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
-    };
-
-    verifyAuth();
-  }, [user.token]);
+  }, [token,validToken]);
 
   if (isLoading) {
     //spinner
@@ -33,7 +24,7 @@ const ProtectedRoute = () => {
     );
   }
 
-  if (!isAuthorized) {
+  if (!validToken) {
     return <Navigate to="/auth/login" replace />;
   }
 

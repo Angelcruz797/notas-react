@@ -5,7 +5,7 @@ import { fetchLogin } from "../utils/fetchAuth";
 import { AlertError } from "../helpers/AlertError";
 
 const useAuthMutations = () => {
-    const { setAccount, user } = useUserStore();
+    const { setAccount, user, setToken } = useUserStore();
     const [isLoading, setIsLoading] = useState(false);
     const { colors } = useColorStore();
 
@@ -15,7 +15,7 @@ const useAuthMutations = () => {
             setIsLoading(true);
             const newUser: Record<string, string> = await fetchLogin(loginData);
             setAccount!({ ...user, ...newUser, });
-            return
+            setToken(newUser.token);
         } catch (error) {
             AlertError("Invalid credentials. Please try again.", colors.mode);
             throw error;

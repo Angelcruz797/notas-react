@@ -6,6 +6,5 @@ export interface UserType {
     lastName: string;
     username: string;
     email: string;
-    token:string;
     files: FileData[];
 };
