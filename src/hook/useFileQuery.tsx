@@ -5,14 +5,15 @@ import { useUserStore } from "../store/useUserStore";
 import { useColorStore } from "../store/useColorStore";
 
 export default function useFileQuery() {
-    const { setFiles } = useUserStore();
+    const { setFiles, token, isTokenValid } = useUserStore();
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const { colors } = useColorStore();
     
     const getFiles=async()=>{
         try {
+            if (!isTokenValid()) throw new Error("Invalid token. Please log in again.");
             setIsLoading(true);
-            const files = await fetchFilesAsync();
+            const files = await fetchFilesAsync(token);
             await setFiles!(files);
             setIsLoading(false);
         } catch (error) {
@@ -23,8 +24,9 @@ export default function useFileQuery() {
 
     const getFileById=async(id:string)=>{
         try {    
+            if (!isTokenValid()) throw new Error("Invalid token. Please log in again.");
             setIsLoading(true);
-            const currentFile= await findFileByIdAsync(id);
+            const currentFile= await findFileByIdAsync(id,token);
             setIsLoading(false);
             return currentFile;
         } catch (error) {

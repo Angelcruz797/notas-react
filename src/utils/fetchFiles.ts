@@ -1,9 +1,14 @@
 import { Environment } from "../data/Enviroment";
 import type { FileData } from "../interfaces/FileData";
 
-export const fetchFilesAsync: () => Promise<FileData[]> = async () => {
+export const fetchFilesAsync: (token: string | null) => Promise<FileData[]> = async (token) => {
     try {
-      const response = await fetch(`${Environment.apiUrl}/api/files`);
+      const response = await fetch(`${Environment.apiUrl}/api/files`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }});
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -15,13 +20,14 @@ export const fetchFilesAsync: () => Promise<FileData[]> = async () => {
     }
 }
 
-export const addFileAsync: (file:{fileName:string, fileType:string}) => Promise<FileData> =
- async (file: {fileName:string, fileType:string}) => {
+export const addFileAsync: (file:{fileName:string, fileType:string},token:string | null) => Promise<FileData> =
+ async (file: {fileName:string, fileType:string},token:string | null) => {
   try {
     const response = await fetch(`${Environment.apiUrl}/api/files`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify(file),
     });
@@ -36,9 +42,14 @@ export const addFileAsync: (file:{fileName:string, fileType:string}) => Promise<
   }
 }
 
-export const findFileByIdAsync: (id:string) => Promise<FileData | null> = async (id:string) => {
+export const findFileByIdAsync: (id:string, token:string | null) => Promise<FileData | null> = async (id:string, token:string | null) => {
   try {
-    const response = await fetch(`${Environment.apiUrl}/api/files/${id}`);
+    const response = await fetch(`${Environment.apiUrl}/api/files/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }});
     if (!response.ok) {
       throw new Error('Failed to fetch file');
     }

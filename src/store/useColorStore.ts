@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from 'zustand/middleware';
 
 export type ColorModeType = {
   letters: string;
@@ -43,10 +44,12 @@ interface ColorStore {
   changeColor: () => void;
 }
 
-export const useColorStore = create<ColorStore>((set) => ({
+export const useColorStore = create<ColorStore>()(persist((set) => ({
   colors: buildColorMode("dark"),
   changeColor: () =>
     set((state) => ({
       colors: buildColorMode(state.colors.mode === "dark" ? "light" : "dark"),
     })),
+}),{
+  name: 'color-storage',
 }));

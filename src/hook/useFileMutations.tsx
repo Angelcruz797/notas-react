@@ -5,18 +5,19 @@ import { useUserStore } from "../store/useUserStore";
 import { useColorStore } from "../store/useColorStore";
 
 export default function useFileMutations() {
-  const { setFiles } = useUserStore();
+  const { setFiles, token, isTokenValid } = useUserStore();
   const [isLoading, setIsLoading] = useState(false);
   const { colors } = useColorStore();
 
   // Crear archivo
   const createFile = async (file: { fileType: string; fileName: string }) => {
     try {
-    setIsLoading(true);
-    const newFile = await addFileAsync(file);
-    const files = await fetchFilesAsync();
-    setFiles!(files);
-    return newFile;
+      if (!isTokenValid()) throw new Error("Invalid token. Please log in again.");
+      setIsLoading(true);
+      const newFile = await addFileAsync(file,token);
+      const files = await fetchFilesAsync(token);
+      setFiles!(files);
+      return newFile;
     } catch (error){
       AlertError("Error creating files. Please try again.",colors.mode);
       throw error;
