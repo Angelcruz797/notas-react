@@ -1,73 +1,52 @@
-# React + TypeScript + Vite
+# AngxSpace
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+AngxSpace is a web application designed for creating, managing, and storing drawing documents. It provides a centralized workspace where users can organize their visual files and access an interactive canvas to create new designs.
 
-Currently, two official plugins are available:
+This repository exclusively contains the **Frontend** code. 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The backend of the web application is located in this repository:
+**[Backend Repository](https://github.com/Angelcruz797/Notes.Api)**
 
-## React Compiler
+## Technologies Used
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The project is built on the React ecosystem, utilizing modern tools for state management, styling, and drawing functionalities:
 
-## Expanding the ESLint configuration
+-   **React + TypeScript:** Main library for building the user interface.
+-   **tldraw:** Integrated core engine for the drawing and interactive whiteboard experience.
+-   **Tailwind CSS:** Framework for a structured and responsive design.
+-   **Material UI (MUI):** Component system for a consistent and accessible interface.
+-   **Zustand:** Tool for managing global application state.
+-   **Formik:** Form handling and validation.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Key Features
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+-   **Integrated Drawing Canvas:** Create and edit diagrams or drawings directly in the browser using tldraw.
+-   **File Management:** Organize documents with options to view recent files.
+-   **Search and Indexing:** Quickly locate documents within the workspace.
+-   **Modern Interface:** Clean design optimized for productivity, with native support for dark mode.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Installation and Development
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Before you begin, make sure you have Node.js installed on your system.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+1. Clone this repository.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+2. Access the project directory:
+   ```bash
+   cd ./notas-react
+   ```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+3. Install the dependencies:
+   ```bash
+   npm install
+   ```
+
+4. Start the project:
+   ```bash
+   npm run dev
+   ```
+
+The default URL will be `http://localhost:5173`.
+
+## License / Project Status
+This is a personal project developed for technical exploration and workflow optimization with web-based drawing tools.
