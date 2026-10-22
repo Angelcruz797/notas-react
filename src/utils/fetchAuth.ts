@@ -6,6 +6,7 @@ export const fetchLogin = async (loginData:{username: string, password: string})
             method: 'POST',
             headers:{
                 'Content-Type': 'application/json',
+                'ngrok-skip-browser-warning': 'true' //skip ngrok browser warning
             },
             body: JSON.stringify(loginData)
         })
