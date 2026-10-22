@@ -7,6 +7,7 @@ export const fetchFilesAsync: (token: string | null) => Promise<FileData[]> = as
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        "ngrok-skip-browser-warning": "true", //skip ngrok browser warning
         'Authorization': `Bearer ${token}`
       }});
       if (!response.ok) {
@@ -27,6 +28,7 @@ export const addFileAsync: (file:{fileName:string, fileType:string},token:string
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        "ngrok-skip-browser-warning": "true", //skip ngrok browser warning
         'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify(file),
@@ -48,6 +50,7 @@ export const findFileByIdAsync: (id:string, token:string | null) => Promise<File
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        "ngrok-skip-browser-warning": "true", //skip ngrok browser warning
         'Authorization': `Bearer ${token}`
       }});
     if (!response.ok) {
