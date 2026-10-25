@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { addFileAsync, fetchFilesAsync } from "../utils/fetchFiles";
+import { addFileAsync, fetchFilesAsync, updateFileAsync } from "../utils/fetchFiles";
 import { AlertError } from "../helpers/AlertError";
 import { useUserStore } from "../store/useUserStore";
 import { useColorStore } from "../store/useColorStore";
@@ -26,15 +26,19 @@ export default function useFileMutations() {
     }
   };
 
-//   // Actualizar archivo
-//   const updateFile = async (fileId: string, updates: { fileName?: string; fileType?: string }) => {
-//     setIsLoading(true);
-//     const updatedFile = await updateFileAsync(fileId, updates);
-//     const files = await fetchFilesAsync();
-//     setFiles!(files);
-//     setIsLoading(false);
-//     return updatedFile;
-//   };
+  // Actualizar archivo
+  const updateFile = async (fileId: string, updates: { fileName: string; content?:string; fileType: string }) => {
+    try {
+      setIsLoading(true);
+      const updatedFile = await updateFileAsync(fileId, updates,token);
+      return updatedFile;
+    } catch (error) {
+      AlertError("Error creating files. Please try again.",colors.mode);
+      throw error;
+    } finally{
+      setIsLoading(false);
+    }
+  };
 
 //   // Borrar archivo
 //   const deleteFile = async (fileId: string) => {
@@ -47,6 +51,7 @@ export default function useFileMutations() {
 
   return {
     createFile,
+    updateFile,
     isLoading,
   };
 }

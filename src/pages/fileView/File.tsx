@@ -4,6 +4,7 @@ import useFileQuery from '../../hook/useFileQuery';
 import TopBar from '../../components/TopBar';
 import { Typography } from '@mui/material';
 import {GridView} from '@mui/icons-material';
+import SaveButton from './draw/components/SaveButton';
 
 
 export const File = () => {
@@ -50,6 +51,9 @@ export const File = () => {
             right={
                 <div className="flex items-center gap-2 shrink-0">
                     {/* Save button or other actions can go here */}
+                    {
+                        location.pathname==`/view/draw/${id}`  &&<SaveButton />
+                    }
                 </div>
             }
         />
