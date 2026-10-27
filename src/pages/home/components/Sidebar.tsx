@@ -35,7 +35,7 @@ export default function Sidebar({ onFileSelect }: SidebarProps) {
           <span className="material-symbols-outlined text-sm"><InsertDriveFileIcon /></span>
         </div>
         <h1 className="text-base font-bold text-text-color dark:text-white tracking-tight">
-          NoteCraft
+          AngxSpace
         </h1>
       </div>
 
