@@ -62,3 +62,26 @@ export const findFileByIdAsync: (id:string, token:string | null) => Promise<File
     console.error('Error fetching file:', error);
     throw error;}
 }
+
+export const updateFileAsync: (fileId:string ,file:{ fileName: string; content?:string; fileType: string },token:string | null) =>Promise<boolean> =
+async (fileId:string, file:{ fileName: string; content?:string; fileType: string } ,token:string | null) => {
+  try {
+    const response = await fetch(`${Environment.apiUrl}/api/files/${fileId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        "ngrok-skip-browser-warning": "true", //skip ngrok browser warning
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(file),
+    });
+    if (!response.ok) {
+      throw new Error('Failed to add file');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error adding file:', error);
+    throw error;
+  }
+}
