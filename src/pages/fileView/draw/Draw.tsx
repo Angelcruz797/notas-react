@@ -5,11 +5,13 @@ import Error404 from "../../error/Error404";
 import useFileQuery from "../../../hook/useFileQuery";
 import { useEffect } from "react";
 import { useDrawStore } from "../../../store/useDrawStore";
+import { useUnsavedWarning } from "../../../hook/useUnsaveWarning";
 
 export default function Draw() {
   const {id} = useParams();
   const {getFileById,isLoading} = useFileQuery();
   const setEditor =useDrawStore((s) => s.setEditor);
+  const hasUnsavedChanges = useDrawStore((s) => s.hasUnsavedChanges)
   const {currentFile, setCurrentFile, loadDraw, reset} =useDrawStore();
   
   useEffect(()=>{
@@ -21,6 +23,8 @@ export default function Draw() {
     fetchFile();
     reset()
   },[id,reset]);
+
+  useUnsavedWarning(hasUnsavedChanges);
 
   if(isLoading) return <div className="w-full h-screen flex items-center justify-center"><span className="text-2xl text-text-color">Loading...</span></div>;
   if(!isLoading && currentFile == null) return <Error404/>;
