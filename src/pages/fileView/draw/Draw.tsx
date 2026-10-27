@@ -6,6 +6,7 @@ import useFileQuery from "../../../hook/useFileQuery";
 import { useEffect } from "react";
 import { useDrawStore } from "../../../store/useDrawStore";
 import { useUnsavedWarning } from "../../../hook/useUnsaveWarning";
+import { Environment } from "../../../data/Enviroment";
 
 export default function Draw() {
   const {id} = useParams();
@@ -38,6 +39,7 @@ export default function Draw() {
   return (
     <div className="w-full h-screen pb-16">
       <Tldraw
+        licenseKey={Environment.tldrawLicense}
         onMount={(editor)=>{
           setEditor(editor)
           loadDraw()
