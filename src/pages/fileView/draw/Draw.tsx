@@ -16,12 +16,18 @@ export default function Draw() {
   
   useEffect(()=>{
     if(!id) return;
+      let ignore = false;
     const fetchFile = async () => {
       const file = await getFileById(id!);
+      if (ignore) return;
       setCurrentFile(file || null);
     }
     fetchFile();
-    reset()
+    
+    return ()=>{
+      ignore = true;
+      reset();
+    }
   },[id,reset]);
 
   useUnsavedWarning(hasUnsavedChanges);

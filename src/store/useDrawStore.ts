@@ -41,10 +41,9 @@ export const useDrawStore = create<DrawStore>()((set, get) => ({
   isSaving: false,
   unlisten: null,
   currentFile:null,
-
-  //set del editor
+  
   setEditor: (editor) => {
-    // Limpiar el listener anterior si existe
+    // Clear the previous listener if it exist
     get().unlisten?.();
 
     if (!editor) {
@@ -68,12 +67,19 @@ export const useDrawStore = create<DrawStore>()((set, get) => ({
 
   setCurrentFile:(currentFile)=>set({currentFile}),
 
-  //guardar el dibujo en db
+  //Save the drawing content to the database
   saveDraw: async ( updateFile ) => {
     const { editor, pendingDiff, currentFile } = get();
     if (!editor || !currentFile) return;
     
-    // Tomamos los cambios pendientes y reiniciamos
+    const savingFileId = currentFile.id;
+    const savingEditor = editor;
+
+    // Same Draw and editor that we are saving
+    const isSameDraw = () =>
+      get().currentFile?.id === savingFileId && get().editor === savingEditor;
+
+    // Take all changes pending and make a reset
     const pending = pendingDiff;
     set({ pendingDiff: emptyDiff(), hasUnsavedChanges: false, isSaving: true });
     try {
@@ -85,7 +91,7 @@ export const useDrawStore = create<DrawStore>()((set, get) => ({
       if(!isUpdated) throw new Error("The request throw false");
     } catch (err) {
 
-      // Si falla, devolvemos los cambios pendientes para no perderlos
+      // On failure, restore pending changes to avoid losing them.
       const merged = squashRecordDiffs([pending, get().pendingDiff]);
       set({ pendingDiff: merged, hasUnsavedChanges: true });
       console.error("Error to save the Draw", err);
@@ -94,7 +100,7 @@ export const useDrawStore = create<DrawStore>()((set, get) => ({
     }
   },
   
-  //load el dibujo en db
+  // Load the drawing content from database
   loadDraw: () => {
     const { editor,currentFile } = get();
     if (!editor || !currentFile?.content?.trim()) return;
@@ -107,7 +113,7 @@ export const useDrawStore = create<DrawStore>()((set, get) => ({
       editor.store.mergeRemoteChanges(() => {
         loadSnapshot(editor.store, snapshot);
       });
-      // Al cargar, no hay cambios sin guardar
+      // On load, there are no unsaved changes
       set({ pendingDiff: emptyDiff(), hasUnsavedChanges: false });
     } catch (error) {
       console.error('error to load snapshot: ',error);
