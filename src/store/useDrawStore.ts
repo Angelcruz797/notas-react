@@ -81,7 +81,7 @@ export const useDrawStore = create<DrawStore>()((set, get) => ({
         diff: pending,
         snapshot: editor.getSnapshot(),
       });
-      const isUpdated = updateFile(currentFile.id, { fileName:currentFile.fileName, content, fileType: "Draw" });
+      const isUpdated = await updateFile(currentFile.id, { fileName:currentFile.fileName, content, fileType: "Draw" });
       if(!isUpdated) throw new Error("The request throw false");
     } catch (err) {
 
@@ -97,17 +97,21 @@ export const useDrawStore = create<DrawStore>()((set, get) => ({
   //load el dibujo en db
   loadDraw: () => {
     const { editor,currentFile } = get();
-    if (!editor || !currentFile) return;
+    if (!editor || !currentFile?.content?.trim()) return;
 
-    const loadData = JSON.parse(currentFile.content);
-    const snapshot = loadData.snapshot;
-    if (!snapshot) return;
-
-    editor.store.mergeRemoteChanges(() => {
-      loadSnapshot(editor.store, snapshot);
-  });
-    // Al cargar, no hay cambios sin guardar
-    set({ pendingDiff: emptyDiff(), hasUnsavedChanges: false });
+    try {
+      const loadData = JSON.parse(currentFile.content);
+      const snapshot = loadData.snapshot;
+      if (!snapshot) return;
+  
+      editor.store.mergeRemoteChanges(() => {
+        loadSnapshot(editor.store, snapshot);
+      });
+      // Al cargar, no hay cambios sin guardar
+      set({ pendingDiff: emptyDiff(), hasUnsavedChanges: false });
+    } catch (error) {
+      console.error('error to load snapshot: ',error);
+    }
   },
 
   reset: () => {
