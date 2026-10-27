@@ -93,6 +93,9 @@ export const useDrawStore = create<DrawStore>()((set, get) => ({
 
       // On failure, restore pending changes to avoid losing them.
       const merged = squashRecordDiffs([pending, get().pendingDiff]);
+      
+      if (!isSameDraw()) return;
+
       set({ pendingDiff: merged, hasUnsavedChanges: true });
       console.error("Error to save the Draw", err);
     } finally {
