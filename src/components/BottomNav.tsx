@@ -8,7 +8,7 @@ type BottomNavProps = {
 export function BottomNav({ buttonsNav }: BottomNavProps) {
   return (
     <nav
-      className="sticky bottom-0 inset-x-0 z-30 sm:hidden bg-secondary-500 dark:bg-secondary-800 py-1"
+      className="sticky bottom-0 inset-x-0 z-30 sm:hidden bg-secondary-500 dark:bg-secondary-800 pt-1 pb-2"
     >
       <ul className="flex h-14 items-stretch justify-around">
         {buttonsNav.map((item) => (
