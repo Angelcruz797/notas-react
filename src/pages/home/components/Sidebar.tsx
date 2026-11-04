@@ -1,38 +1,32 @@
-import { useUserStore } from "../../../store/useUserStore";
 import { useCallback } from "react";
-import StarIcon from '@mui/icons-material/Star';
-import DeleteIcon from '@mui/icons-material/Delete';
-import GroupIcon from '@mui/icons-material/Group';
-import DescriptionIcon from '@mui/icons-material/Description';
-import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import { Divider } from "@mui/material";
 import Account from "./Account";
+import { useNavigate } from "react-router";
+import { type ButtonsNavType } from '../../../types/ButtonsNavType'
+import ResponsiveDrawer from "../../../components/ResponsiveDrawer";
+import { FilePenLine } from "lucide-react";
+
 
 interface SidebarProps {
-  onFileSelect?: () => void;
+  navItems: ButtonsNavType[];
+  mobileSidebarOpen: boolean;
+  onClose: () => void;
 }
 
-const navigationItems = [
-  { label: 'My Documents', icon: <DescriptionIcon/>, to: '/' },
-  { label: 'Shared with me', icon: <GroupIcon/>, to: '/' },
-  { label: 'Starred', icon: <StarIcon/>, to: '/' },
-  { label: 'Trash', icon: <DeleteIcon/>, to: '/' },
-];
-
-export default function Sidebar({ onFileSelect }: SidebarProps) {
-  const { user } = useUserStore();
+export default function Sidebar({ navItems,mobileSidebarOpen,onClose }: SidebarProps) {
+  const navigate = useNavigate();
 
 
-  const handleFileClick = useCallback(() => {
-    onFileSelect?.();
-  }, [onFileSelect]);
+  const handleFileClick = useCallback((to: string) => {
+    navigate(to);
+  }, [navigate]);
 
   return (
-    <aside className="w-56 shrink-0 bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 flex flex-col">
+    <ResponsiveDrawer mobileSidebarOpen={mobileSidebarOpen} onClose={onClose}>
       {/* Logo Section */}
       <div className="flex items-center gap-2 p-4 h-16 border-b border-slate-200 dark:border-slate-800">
-        <div className="w-7 h-7 bg-primary rounded flex items-center justify-center text-text-color">
-          <span className="material-symbols-outlined text-sm"><InsertDriveFileIcon /></span>
+        <div className="w-7 h-7 rounded flex items-center justify-center bg-transparent">
+          <span className="material-symbols-outlined text-sm"><FilePenLine className="text-text-color" /></span>
         </div>
         <h1 className="text-base font-bold text-text-color dark:text-white tracking-tight">
           AngxSpace
@@ -40,13 +34,13 @@ export default function Sidebar({ onFileSelect }: SidebarProps) {
       </div>
 
       <nav className="flex-1 p-3 space-y-0.5 overflow-y-auto">
-        {navigationItems.map((item) => (
+        {navItems.map((item) => (
           <div
             key={item.label}
-            onClick={handleFileClick}
+            onClick={() => handleFileClick(item.to)}
             className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm cursor-pointer transition-colors
-             hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900
-              dark:hover:text-white hover:font-medium"
+            hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900
+            dark:hover:text-white hover:font-medium"
           >
             <span className="material-symbols-outlined text-lg">{item.icon}</span>
             <span>{item.label}</span>
@@ -55,8 +49,8 @@ export default function Sidebar({ onFileSelect }: SidebarProps) {
         <Divider className=" border-slate-200 dark:border-slate-800" />
       </nav>
 
-        {/* User Profile Section */}
-        <Account user={user} />
-    </aside>
+      {/* User Profile Section */}
+      <Account />
+    </ResponsiveDrawer>
   );
 }

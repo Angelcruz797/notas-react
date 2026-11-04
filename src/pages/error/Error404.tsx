@@ -1,15 +1,13 @@
 import { useNavigate } from "react-router";
-import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
-import HomeIcon from "@mui/icons-material/Home";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { FaceSlightlyFrowning, House , ArrowLeft } from "lucide-react";
 
 export default function Error404() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-1 items-center justify-center bg-white dark:bg-slate-900 min-h-[70vh] px-6">
+    <div className="flex flex-1 items-center justify-center bg-white dark:bg-slate-900 h-dvh px-6">
       <div className="flex flex-col items-center text-center max-w-md">
-        <SentimentDissatisfiedIcon
+        <FaceSlightlyFrowning
           className="text-primary-500 dark:text-primary-400"
           style={{ fontSize: 96 }}
         />
@@ -26,12 +24,12 @@ export default function Error404() {
           The page you're looking for doesn't exist or may have been moved.
         </p>
 
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <div className="mt-8 flex items-center justify-center gap-3">
           <button
             onClick={() => navigate(-1)}
             className="flex items-center gap-2 rounded-lg border border-secondary-600 px-5 py-2.5 font-medium text-primary-700 transition-colors hover:bg-secondary-200 dark:border-slate-700 dark:text-primary-200 dark:hover:bg-slate-800"
           >
-            <ArrowBackIcon fontSize="small" />
+            <ArrowLeft fontSize="small" />
             Go back
           </button>
 
@@ -39,8 +37,8 @@ export default function Error404() {
             onClick={() => navigate("/")}
             className="flex items-center gap-2 rounded-lg bg-primary-600 px-5 py-2.5 font-medium text-white transition-colors hover:bg-primary-700"
           >
-            <HomeIcon fontSize="small" />
-            Back to home
+            <House fontSize="small" />
+            Go home
           </button>
         </div>
       </div>

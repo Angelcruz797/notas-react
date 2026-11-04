@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import DocumentTable from "./DocumentTable";
 import { useUserStore } from "../../../store/useUserStore";
 import useFileQuery from "../../../hook/useFileQuery";
+import AddFileDialog from "./AddFileDialog";
 
 export default function Landing() {
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
@@ -43,6 +44,9 @@ export default function Landing() {
             viewMode={viewMode}
             onViewModeChange={handleViewModeChange}
           />
+          <div className="sm:hidden">
+            <AddFileDialog />
+          </div>
         </main>
       </div>
     </>

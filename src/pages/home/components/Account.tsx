@@ -1,7 +1,8 @@
 import { AccountCircle, Logout, Settings } from "@mui/icons-material"
-import Dropdown, { type DropdownItem } from "../../../components/Dropdown";
+import Dropdown from "../../../components/Dropdown";
 import { useUserStore } from "../../../store/useUserStore";
 import { useNavigate } from "react-router";
+import type { DropdownItem } from "@/types/DropdownItem";
 
 export default function Account(){
   const {user, logout} = useUserStore();
@@ -22,12 +23,12 @@ export default function Account(){
     <Dropdown
       id="account-menu"
       trigger={
-        <div className="p-4 border-t border-slate-200 dark:border-slate-800">
+        <div className="p-4 sm:border-t border-slate-200 dark:border-slate-800">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full text-white flex items-center justify-center text-sm font-bold">
+            <div className="sm:w-8 sm:h-8 w-10 h-10 rounded-full text-white bg-gray-700 flex items-center justify-center text-sm font-bold">
               {(user?.username || "U").charAt(0).toUpperCase()}
             </div>
-            <div className="flex-1 min-w-0">
+            <div className="flex-1 min-w-0 max-sm:hidden">
               <div className="text-sm font-medium text-slate-900 dark:text-white truncate">
                 {user?.username || "User"}
               </div>

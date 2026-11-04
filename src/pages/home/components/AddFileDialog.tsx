@@ -7,17 +7,17 @@ import { AlertError } from "../../../helpers/AlertError";
 import AlertSuccess from "../../../helpers/AlertSuccess";
 import { useColorStore } from "../../../store/useColorStore";
 import AppDialog from "../../../components/AppDialog";
+import {Plus} from 'lucide-react';
 
-type AddFileProps = {
-    openDialog: boolean;
-    handleCloseDialog: () => void;
-}
-export default function AddFileDialog({openDialog: open, handleCloseDialog}: AddFileProps) {
+export default function AddFileDialog() {
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [fileName, setFileName] = useState<string>("");
   const [isValidation, setIsValidation] = useState<boolean>(false);
   const { createFile } = useFileMutations();
   const navigate = useNavigate();
   const { colors } = useColorStore();
+
+  
 
   const handleFileNameChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setFileName(event.target.value);
@@ -46,10 +46,35 @@ export default function AddFileDialog({openDialog: open, handleCloseDialog}: Add
     }
   };
 
+  const handleOpenDialog = useCallback(() => {
+      setOpenDialog(true);
+    }, []);
+  
+    const handleCloseDialog = useCallback(() => {
+      setOpenDialog(false);
+    }, []);
+
   return (
     <>
+      <button
+        onClick={handleOpenDialog}
+        className="flex items-center gap-2 bg-slate-200 hover:bg-slate-300
+          text-text-color dark:bg-slate-800 dark:hover:bg-slate-600
+          font-semibold text-sm transition-colors
+          sm:px-4 sm:h-9 sm:rounded-lg sm:w-max
+
+          max-sm:fixed max-sm:bottom-20 max-sm:right-5 max-sm:z-40
+          max-sm:w-14 max-sm:h-14 max-sm:rounded-full max-sm:shadow-lg
+          max-sm:bg-blue-600 max-sm:hover:bg-blue-700 max-sm:text-white
+          dark:max-sm:bg-blue-600 dark:max-sm:hover:bg-blue-700
+          "
+      >
+        <Plus className="text-lg max-sm:m-auto" />
+        <p className="max-sm:hidden">New Document</p>
+      </button>
+
       <AppDialog
-        open={open}
+        open={openDialog}
         onClose={handleCloseDialog}
         title="Create New Document">
 
@@ -113,6 +138,11 @@ export default function AddFileDialog({openDialog: open, handleCloseDialog}: Add
             </ListItemButton>
           </div>
       </AppDialog>
+
+      {/* <AddFileDialog
+        openDialog={openDialog}
+        handleCloseDialog={handleCloseDialog}
+      /> */}
     </>
   );
 }

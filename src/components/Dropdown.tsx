@@ -1,87 +1,54 @@
-import { Menu, MenuItem, ListItemIcon, Divider } from "@mui/material"
-import { useState, cloneElement, type MouseEvent, type ReactElement } from "react"
-import { useColorStore } from "../store/useColorStore"
-import type { PopoverOrigin } from "@mui/material"
-
-export type DropdownItem = {
-  icon?: ReactElement<any>;
-  label: string;
-  onClick?: () => void;
-  dividerAfter?: boolean;
-}
+import type { DropdownItem } from "@/types/DropdownItem";
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import { cloneElement, Fragment, type ReactElement } from "react";
 
 type DropdownProps = {
   trigger: ReactElement<any>;
   items: DropdownItem[];
   id?: string;
-  anchorOrigin?: PopoverOrigin;
-  transformOrigin?: PopoverOrigin;
+  side?: "top" | "right" | "bottom" | "left";
+  align?: "start" | "center" | "end";
 }
 
 export default function Dropdown({
   trigger,
   items,
   id = "dropdown-menu",
-  anchorOrigin = { horizontal: "right", vertical: "top" },
-  transformOrigin = { horizontal: "right", vertical: "bottom" },
+  side = "top",
+  align = "end",
 }: DropdownProps) {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const { colors } = useColorStore()
-  const open = Boolean(anchorEl)
-
-  const handleOpen = (event: MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
-
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
-
-  const triggerWithHandler = cloneElement(trigger, {
-    onClick: handleOpen,
-    style: { cursor: "pointer" },
-  })
-
   return (
-    <>
-      {triggerWithHandler}
-      <Menu
-        anchorEl={anchorEl}
-        id={id}
-        open={open}
-        onClose={handleClose}
-        onClick={handleClose}
-        anchorOrigin={anchorOrigin}
-        transformOrigin={transformOrigin}
-        sx={{
-          ["& .MuiMenu-list"]: {
-            backgroundColor:
-              colors.mode === "dark"
-                ? colors.primary[800]
-                : colors.primary[100],
-          },
-        }}
-      >
-        {items.map((item, index) => (
-          <span key={index}>
-            <MenuItem
-              onClick={item.onClick}
-              sx={{ color: colors.letters }}
-            >
-              {item.icon && (
-                <ListItemIcon>
-                  {cloneElement(item.icon, {
-                    fontSize: "small",
-                    sx: { color: colors.letters },
-                  })}
-                </ListItemIcon>
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger asChild>{trigger}</DropdownMenu.Trigger>
+
+      <DropdownMenu.Portal>
+        <DropdownMenu.Content
+          side={side}
+          align={align}
+          sideOffset={6}
+          className="z-50 min-w-40 rounded-lg border border-slate-200 dark:border-slate-700 p-1 shadow-lg
+            bg-primary-100 dark:bg-primary-800 text-text-color"
+          id={id}
+        >
+          {items.map((item) => (
+            <Fragment key={item.label}>
+              <DropdownMenu.Item
+                onSelect={item.onClick}
+                className="flex cursor-pointer select-none items-center gap-2 rounded-md px-3 py-2 text-sm outline-none
+                data-[highlighted]:bg-primary-400 dark:data-[highlighted]:bg-primary-900"
+              >
+                {item.icon &&
+                  cloneElement(item.icon, { fontSize: "small" })}
+                {item.label}
+              </DropdownMenu.Item>
+
+              {item.dividerAfter && (
+                <DropdownMenu.Separator className="my-1 h-px bg-slate-300 dark:bg-slate-600" />
               )}
-              {item.label}
-            </MenuItem>
-            {item.dividerAfter && <Divider className="bg-slate-600" />}
-          </span>
-        ))}
-      </Menu>
-    </>
-  )
+            </Fragment>
+          ))}
+        </DropdownMenu.Content>
+      </DropdownMenu.Portal>
+    </DropdownMenu.Root>
+  );
 }
