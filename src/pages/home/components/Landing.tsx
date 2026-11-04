@@ -92,12 +92,6 @@ export default function Landing() {
                     </span>
                 </div>
             )}
-          <DocumentTable
-            files={filteredFiles()}
-            isLoading={isLoading}
-            viewMode={viewMode}
-            onViewModeChange={handleViewModeChange}
-          />
           <div className="sm:hidden">
             <AddFileDialog />
           </div>
