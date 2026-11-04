@@ -11,7 +11,7 @@ function App() {
 
   return (
     <>
-      <div className='bg-secondary-500 h-dvh fixed w-full duration-300'>
+      <div className='bg-secondary-500 fixed inset-0 duration-300'>
         <Outlet />
         <ToastContainer
           position="bottom-right"
