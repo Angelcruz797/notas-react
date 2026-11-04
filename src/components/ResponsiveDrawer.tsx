@@ -27,7 +27,7 @@ export default function ResponsiveDrawer({
                 onOpenChange={(open) => !open && onClose()}
             >
                 <DrawerContent
-                    className={`lg:hidden w-56! max-w-56! rounded-none ${asideStyle}`}
+                    className={`w-56! max-w-56! rounded-none ${asideStyle}`}
                 >
                     <DrawerTitle className="sr-only">Menú de navegación</DrawerTitle>
                     {children}
