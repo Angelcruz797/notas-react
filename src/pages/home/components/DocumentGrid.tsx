@@ -1,15 +1,14 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { getFileIcon, getIconBgColor } from "@/helpers/FileIcons";
-import useFileQuery from "@/hook/useFileQuery";
 import type { FileData } from "@/interfaces/FileData";
 import { useNavigate } from "react-router";
 
 type DocumentGridProps = {
     files: FileData[];
+    isLoading?: boolean;
 };
 
-const DocumentGrid = ({ files }: DocumentGridProps) => {
-    const {isLoading} = useFileQuery();
+const DocumentGrid = ({ files , isLoading }: DocumentGridProps) => {
     const navigate = useNavigate();
 
     return (

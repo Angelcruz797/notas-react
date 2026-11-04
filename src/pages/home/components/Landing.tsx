@@ -75,9 +75,9 @@ export default function Landing() {
                   </div>
                 </div>
 
-          {viewMode === "grid" ? <DocumentGrid files={filteredFiles()} /> : <DocumentList files={filteredFiles()} isLoading={isLoading} />}
+          {viewMode === "grid" ? <DocumentGrid files={filteredFiles()} isLoading={isLoading} /> : <DocumentList files={filteredFiles()} isLoading={isLoading} />}
           {/* Empty State */}
-            {!isLoading && user.files.length === 0 && (
+            {!isLoading && filteredFiles().length === 0 && (
                 <div className="bg-slate-50 dark:bg-slate-700/30 py-12 flex flex-col items-center justify-center text-slate-400">
                     <span className="material-symbols-outlined text-4xl mb-2 opacity-20">
                         <Cloud fontSize="large" />
