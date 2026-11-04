@@ -32,7 +32,7 @@ export default function Home() {
   // Landing page has its own layout, don't show the global Topbar for it
   if (isLandingPage) {
     return (
-      <div className="flex max-sm:flex-col-reverse sm:flex-row h-screen bg-slate-50 dark:bg-slate-950 overflow-hidden">
+      <div className="flex max-sm:flex-col-reverse sm:flex-row h-full bg-slate-50 dark:bg-slate-950 overflow-hidden">
         {/* Sidebar Navigation */}
         <Sidebar navItems={navItems} mobileSidebarOpen={mobileSidebarOpen} onClose={()=>setMobileSidebarOpen(false)} />
         <BottomNav buttonsNav={navItems} />
